@@ -1,0 +1,66 @@
+%Description: 
+% Track eigenmodes based on eigenvectors.This approach can be more robust to track 
+%the eigenmodes after a exceptional points
+
+%INPUTS:
+% HTM_eval: Its a matrix stucture that contains the eigenvalues generated each iteration.
+% HTM_evec: Its a cell structure that contains multiple matrix arrays with the set of eigenvalues. 
+
+%OUTPUTS:
+% eval_matrix: Its a matrix stucture that contains the re-ordered eigenvalues generated each iteration
+% evec_matrix: Its a cell stucture that contains the re-ordered eigenvectors generated each iteration
+
+
+function [eval_matrix, evec_matrix] = evec_track(HTM_eval, HTM_evec)
+
+n = length(HTM_evec);
+
+
+[nrows, ncols] =size (HTM_eval);
+
+eval_matrix = zeros (nrows, ncols);
+evec_matrix = cell(n,1); 
+
+
+evec_reorder = zeros(nrows);
+
+
+eval_matrix (:,1)= HTM_eval(:,1);    % First set of eigenvalues
+evec_matrix {1} = HTM_evec{1};     % First set of eigenvectors
+
+
+for  j = 2:n
+
+        Vprev = evec_matrix{j-1};       %Previous matrix of eigenvectors (re-ordered)
+        Vcurr = HTM_evec {j,1};         %Current set of eigenvectors
+    
+        C = abs(Vprev' *Vcurr);           %Eigenvector overlap matrix
+     
+       % find best permutation
+        p = zeros(nrows,1);
+        used = false(nrows,1);
+
+        for k = 1:nrows
+        
+            [~, idx] = max(C (k,:)); 
+
+
+             while used(idx)
+                C(k,idx) = -inf;
+                [~,idx] = max(C(k,:));
+            end
+        
+                p(k) = idx;
+                used(idx) = true;
+
+       
+        end
+        
+        %reorder eigenvalues
+        eval_matrix (:,j) = HTM_eval(p,j);
+
+        %reorder eigenvectors
+        evec_matrix {j} =  Vcurr(:,p); 
+end
+
+end
