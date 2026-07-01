@@ -11,10 +11,8 @@ function [] =  Nyquist_plot(HTM_evals, nfm, De, Z, gamma0, omega)
 
 % ordered_evals= evals_ordering (HTM_evals, HTM_evecs); 
 
-k = find(omega == 0);
-
-
-HTM_evals = sortrows(HTM_evals, k, 'descend' );
+% k = find(omega == 0);
+% HTM_evals = sortrows(HTM_evals, k, 'descend' );
 
 ordered_evals= evals_ordering (HTM_evals); 
 evals_real = real(ordered_evals);
@@ -23,89 +21,15 @@ evals_imag = imag(ordered_evals);
 
 [nrows, ~] = size(ordered_evals);
 
-
-
-% 
-% 
-% plot(evals_real (:,k), evals_imag  (:, k), 'o')
-% hold on
-% plot(0,0,'+', MarkerSize=10, MarkerFaceColor='r')
-% title('Eigenvalue Spectrum - Ordered  nfm = '+string(nfm) +', De = '+string(De)+ ...
-%     ', \gamma = '+string(gamma0)+ ', Z = '+string(Z))
-% xlabel('Real part')
-% ylabel('Imaginary part')
-% 
-
-
-
-
-
-
-
 %Ordered Eigenspectrum
 for n =1:nrows
 plot(evals_real (n,:), evals_imag (n, :), 'o')
 hold on
 % plot(evals_real (n, 1:index), evals_imag (n, 1:index),  'LineStyle', 'none','Marker','x')
 plot(0,0,'+', MarkerSize=10, MarkerFaceColor='r')
-% Adding direction arrows 
-x = evals_real(n,:);
-y = evals_imag(n,:);
-step = 20;  % adjust as needed
-for k = 1:step:length(x)-1
-    dx = x(k+1) - x(k);
-    dy = y(k+1) - y(k);
-        quiver(x(k), y(k), dx, dy, 0, 'k', 'MaxHeadSize', 10);
 end
-end
- title('Eigenvalue Spectrum - Ordered  nfm = '+string(nfm) +', De = '+string(De)+ ...
-', \gamma = '+string(gamma0)+ ', Z = '+string(Z))
-xlabel('Real part')
-ylabel('Imaginary part')
-
-
-
-
-%Ordered Eigenspectrum
-% figure()
-% for n =1:nrows
-% plot(evals_real (n,k), evals_imag (n, k), 'o')
-% hold on
-% end
-% title('Eigenvalue Spectrum - Ordered  nfm = '+string(nfm) +', De = '+string(De)+ ...
-%     ', \gamma = '+string(gamma0)+ ', Z = '+string(Z))
-% xlabel('Real part')
-% ylabel('Imaginary part')
-
-
-% %Ordered Eigenspectrum 
-% figure()
-% for n =1:nrows
-% plot(evals_real (n, k), evals_imag (n, k), 'o')
-% hold on
-% end
-% xlabel('Real part')
-% ylabel('Imaginary part')
-% 
-
-
-
-
-% These plots can be useful for identify exceptional points. 
-% 
-% for nn = 1: nrows
-% figure(10)
-%     plot(omega, (evals_real(nn,:)));
-%     hold on
-%     xlabel('Re(\lambda)')
-%     xlabel('Frequency')
-% 
-%     figure(20)
-%     plot(omega, evals_imag(nn,:));
-%     hold on 
-%     ylabel('Img(\lambda)')
-%     xlabel('Frequency')
-% end
-
-
+xlabel('$\mathrm{Re}(\lambda)$', 'Interpreter', 'latex')
+ylabel('$\mathrm{Im}(\lambda)$', 'Interpreter', 'latex')
+legend ('Z = '+string(Z))
+legend box off
 end 

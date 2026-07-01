@@ -119,7 +119,7 @@ HTM_i = zeros(2*nfm+1, 2*nfm+1);
                                 id = -1i*(f*(n)).*tspan;
 
 
-                                 HTM_i (index, m)  =  sum(yP (m,nstep*(ncyc_sol-1)+1:end).* exp(id)) * dt/pe;
+                                 HTM_i (index, m)  =  sum(yP (m,nstep*(ncyc_sol-1)+1:end).* exp(id)) * dt/(T*pe);
                                  
                             end                     
 
@@ -129,43 +129,14 @@ HTM_i = zeros(2*nfm+1, 2*nfm+1);
 
                     HTM=HTM_i;
 
-                       % 
-                       % Figure of the HTM matrix 
-                       if s == 0
-                          %matrix = (dSdG_cos-1i*dSdG_sin)/pe;
-                          matrix = (HTM);
-                          real_num = real(matrix);
-                          imag_num = imag(matrix);
-
-                          mag_matrix =sqrt(imag_num.^2+real_num.^2);
-                          figure()
-                          surf(mag_matrix); %Admittance matrix (Steady-state gain of LTPV system)
-
-                          zlabel('Magnitude')
-                          xlabel('Input frequency')
-                          ylabel('Output frequency')
-                          % s.EdgeColor = 'none';
-                          colorbar
-                       end 
-
                 % Calculating evals/evec of HTM for each s-value.
-                % [evecs, evals] =eig(HTM);
-                [evecs, evals] =eigs(HTM, 2*nfm+1);
+                [evecs, evals] =eig(HTM);
+
                 lambda = diag(evals);
                 HTM_eval (:, iter) = lambda;
                 HTM_evec {iter,1} = evecs; 
-                % HTM_collection {iter,1} =HTM;
-
+                
 end
-
-
-
-%% Nyquist Plot
-% num_eval = 2*nfm+1; % Number of evals used to generate the Nyquist plot
-Nyquist_plot(HTM_eval, nfm, De, Z, gamma0, omega)
-
-%% Complex modulus
-% complex_modulus(omega, HTM_eval)
 end
 
 

@@ -23,7 +23,7 @@ end
 De =2;                 % Deborah number 
 gamma0 = 1.5;          % Strain amplitude
 % Z = 4.5;             % Entanglement number
-Z = (0:0.1:5);
+Z = (0:0.1:2);
 nfm = 8;               % Number of Fourier modes
 ncyc = 20;             % Number of cycles for LAOS simulation
 ncyc_sol = 5;          % Number of saved cycles for the analysis
@@ -34,7 +34,7 @@ model = @Euler_step_nRP; % Rolie-Poly model
 evals = zeros(2*nfm+1, length(Z));
 evecs = cell(length(Z));
 
-
+frame = 0;
 for k = 1:length(Z)
 
     [omega, HTM_eval, HTM_evec] =nRP_LAOS (model, De, gamma0, Z(k), ncyc, ncyc_sol, nfm, nstep);
@@ -43,7 +43,7 @@ for k = 1:length(Z)
     evecs {k} = HTM_evec;
 
 
-   Nyquist_plot(HTM_eval, nfm, De, Z(k), gamma0, omega);
+    Nyquist_plot(HTM_eval, nfm, De, Z(k), gamma0, omega);
 
    % 4. Saving the figures 
     frame = frame +1;
@@ -59,7 +59,7 @@ for k = 1:length(Z)
     % fullPath2 = fullfile(folderName2, fileName);
     % saveas(gcf, fullPath2, 'jpg');
     close all
-    
+
 end
 
 
@@ -79,42 +79,26 @@ for i = 1: length(Z)
             d = abs(v);             % Amplitude of each eigenfunction 
             f = (-nfm:1:nfm);       % Harmonics
             
-            figure(10)
+            figure(1)
             plot(f, d, 'LineStyle','-', 'LineWidth', 1)
             hold on
-            xlabel ('Frequency (\omega_n / \omega_o )')
+            xlabel ('Frequency ($\mathrm{\omega_n}$ / $\mathrm{\omega_o}$ )')
         end 
 end
 
 
 
-
 %% Analysis of eigenvector inside the band gap
-
-clear all, close all
+% 
+% clear all, close all
 
 % This matlab file correspond to a simulation with eigenstates inside the
 % band gap.
-
-load test.mat
-
-% Eigenvector analysis
-evec_analysis (omega, HTM_eval, HTM_evec, nfm, De,nstep)
-
-
-
-
-%% Analysis of eigenvector inside the band gap
-
-clear all, close all
-
-% This matlab file correspond to a simulation with eigenstates inside the
-% band gap.
-
-load test.mat
-
-% Eigenvector analysis
-evec_analysis (omega, HTM_eval, HTM_evec, nfm, De,nstep)
+% 
+% load test.mat
+% 
+% % Eigenvector analysis
+% evec_analysis (omega, HTM_eval, HTM_evec, nfm, De,nstep)
 
 
 

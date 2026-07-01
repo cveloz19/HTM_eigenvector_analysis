@@ -52,6 +52,7 @@ for k = 2: ncolums
     
     track_evals = HTM_evals(:, k); 
     track_evecs = HTM_evec {k,1};
+    track_evecs = cell2mat(track_evecs);
 
     x = real(track_evals);
     y = imag(track_evals);
