@@ -30,7 +30,7 @@ ordered_evals (:,1) =  HTM_evals(:,1);      %Saving the first set of evals.
 
 % Ordered evecs 
 ordered_evecs = cell(length(HTM_evec), 1); %Output cell structure for the ordered set of eigenvalues
-ordered_evecs {1,1} = HTM_evec{1,1};         % Saving the first set of eigenvectors 
+ordered_evecs {1,1} = cell2mat(HTM_evec{1,1});         % Saving the first set of eigenvectors 
 
 
 

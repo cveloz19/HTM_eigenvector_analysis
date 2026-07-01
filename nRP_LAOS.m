@@ -52,13 +52,12 @@ x0 = base_LC(:, end)';
 pe = 0.03 ;      % Perturbation amplitude
 
 % Defining the contour of our Nyquist plot
-n = 50;
-omega_neg = linspace(-(f-1e-3)/2, -f/(2*n), n+1); %
-omega_pos = linspace(f/(2*n), f/2, n+1);
+% n = 50;
+% omega_neg = linspace(-(f-1e-3)/2, -f/(2*n), n+1); %
+% omega_pos = linspace(f/(2*n), f/2, n+1);
+% omega = [omega_neg 0 omega_pos];
 
-
-
-omega = [omega_neg 0 omega_pos];
+omega = [0];
 
 % omega = -1*[omega_neg 0 omega_pos];
 
