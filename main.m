@@ -87,6 +87,7 @@ for i = 1: length(Z)
 end
 
 
+%development branch
 
 %% Analysis of eigenvector inside the band gap
 % 
